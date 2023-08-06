@@ -50,7 +50,7 @@
                                 <p><strong>First name:</strong> {{ profile.first_name | title }}</p>
                                 <p><strong>Last name:</strong> {{ profile.last_name | title }}</p>
                                 <p><strong>Phone number:</strong> {{ profile.phone_number }}</p>
-                                <p><strong>My telegram:</strong> <a href="{{ profile.telegram_link }}">{{ profile.telegram_link }}</a></p>
+                                <p><strong>My telegram:</strong> <a href="{{ profile.telegram_link }}">t.me/{{ profile.user.username | lower }}</a></p>
                                 <p><strong>Profile creation time:</strong> {{ profile.created_at | date:"d.m.Y H:i" }} year</p>
                             </div>
                         </div>
