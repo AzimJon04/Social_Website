@@ -1,0 +1,72 @@
+/* Стилизация круглого изображения */
+.account-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Стилизация карточки */
+.card {
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Отступы между параграфами */
+.card p {
+    margin: 5px 0;
+}
+
+/* Стилизация кнопки */
+.btn-edit-profile {
+    display: block;
+    width: 100%;
+    max-width: 150px;
+    margin: 15px auto;
+}
+
+
+/* Стили для фиксированных размеров карточек */
+.card {
+    max-width: 800px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card .card-body {
+    padding: 10px;
+}
+
+.card img.card-img-top {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 10 auto;
+    display: block;
+}
+
+.card h5.card-title {
+    margin-bottom: 10px;
+}
+
+.card p.card-text {
+    margin-bottom: 5px;
+}
+
+.card-footer h3 {
+    margin-bottom: 10px;
+}
+
+.btn-group {
+    margin-top: 10px;
+}
+
+/* Стили для списка фоловеров */
+.card .list-unstyled {
+    margin-top: 10px;
+    padding-left: 20px;
+    list-style: none;
+}

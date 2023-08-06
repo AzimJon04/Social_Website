@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<div class="row">
+    <div class="col">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Welcome to Fantasy, @{{ user.username | lower }}!</h4>
+            <p>On this page you can view your posts and publications of the accounts you are subscribed to.</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% for userpost in userposts %}
+                <a href="{% url 'publications:post_user' userpost.pk %}" style="text-decoration: none;">
+                <div class="card mb-8 card-footer text-muted alert alert-success">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-sm-3">
+                            {% if userpost.user.userprofile.image %}
+                                <img class="card-img-top rounded-circle account-img mt-2" src="{{ userpost.user.userprofile.image.url }}" alt="Profile Image">
+                            {% else %}
+                                <img class="card-img-top rounded-circle account-img mt-2" src="{% static 'img/avatar.jpg' %}" alt="Default Profile Image">
+                            {% endif %}
+                            </div>
+                            <div class="col">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ userpost.user.userprofile.first_name | title }}</h5>
+                                    <h5 class="card-title">{{ userpost.title | capfirst }}</h5>
+
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            ({{ userpost.created_at }} by @{{ userpost.user.username | lower }})
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-success btn-block mt-3" type="submit">Publish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

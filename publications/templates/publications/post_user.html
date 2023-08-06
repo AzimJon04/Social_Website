@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <div class="row">
+        <div class="col">
+            <div class="container card">
+                <div class="card-body">
+                    <div class="card-footer text-muted alert alert-success">
+                        <h5 class="card-title text-center ">{{ post.title | capfirst }}</h5>
+                    </div>
+                    <p>{{ post.post | capfirst }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            ({{ post.created_at }} by @{{ post.user.username | lower }})
+                        </small>
+                    </p>
+                </div>
+                <form class="row" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        {{ form.comment }}
+                        <button class="btn btn-outline-secondary">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <form class="row" method="post">
+                    {% csrf_token %}
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-outline-secondary" name="like" value="like"><i class="far fa-thumbs-up"></i><span class="badge text-bg-secondary ">{{ post.user_like.count }}</span></button> <!-- Иконка like -->
+                        <button class="btn btn-outline-secondary" name="like" value="dislike"><i class="far fa-thumbs-down"><span class="badge text-bg-secondary">{{ post.user_dislike.count }}</span></i></button> <!-- Иконка dislike -->
+                    </div>
+                </form>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Comments on the posts
+                    </button>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card-body">
+                        {% if post.comment.all %}
+                        {% for comment in post.comment.all %}
+                        <a class="nav-link" href="{% url 'registration:profile_list' user.pk %}">
+                        <div class="card-footer">
+                            <h5 class="card-title">{{ comment.comment }}</h5>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    ({{ comment.created_at }} by @{{ comment.user_comment.username | lower }})
+
+                                </small>
+                            </p>
+                        </div>
+                        </a>
+                        {% endfor %}
+                        {% else %}
+                        <div class="card-footer">
+                            <h5 class="card-text text-center">no comments yet</h5>
+                        </div>
+                        {% endif %}
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

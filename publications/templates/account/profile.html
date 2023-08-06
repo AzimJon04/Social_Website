@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+{% block content%}
+<div class="container mt-10">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-footer text-muted alert alert-success">
+                    <h3>Account</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3 mb-3">
+                            {% if profile.image %}
+                                <img class="card-img-top rounded-circle account-img" src="{{ profile.image.url }}" alt="Profile Image">
+                            {% else %}
+                                <img class="card-img-top rounded-circle account-img" src="{% static '/img/avatar.jpg' %}" alt="Profile Image">
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="mt-3">
+                                <p><strong>User name:</strong> @{{ profile.user.username | lower }}</p>
+                                <p><strong>First name:</strong> {{ profile.first_name | title }}</p>
+                                <p><strong>Last name:</strong> {{ profile.last_name | title }}</p>
+                                <p><strong>Phone number:</strong> {{ profile.phone_number }}</p>
+                                <p><strong>My telegram:</strong> <a href="{{ profile.telegram_link }}">t.me/{{ profile.user.username | lower }}</a></p>
+                                <p><strong>Profile creation time:</strong> {{ profile.created_at | date:"d.m.Y H:i" }} year</p>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="{% url 'registration:profile_edit' profile.pk %}" class="btn btn-outline-primary">Edit Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card expand-lg text-muted alert alert-success ">
+                    <h3>Posts: {{profile.user.user_post.all.count}}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mt-4">
+                        {% for post in profile.user.user_post.all %}
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title text-muted">{{ post.title | capfirst }}</h5>
+                                {{ post.post }}
+                                <span class="small text-muted">
+                                    ({{ post.created_at }})
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            {% if profile in user.userprofile.follows.all %}
+                <div class="card">
+                    <div class="card-footer text-muted alert alert-success">
+                        <h3 class="card-title h4">
+                            {{ profile.first_name | title }} follows: {{ profiles. }}
+                        </h3>
+                    </div>
+                    <ul class="list-unstyled">
+                        {% for following in profile.follows.all %}
+                        {% if following != profile %}
+                        <a href="{% url 'registration:profile_list' following.pk %}" style="text-decoration: none;">
+                        <li class="card-body mt-20">
+                            @{{ following.user | lower }}
+                        </li>
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if profile in user.userprofile.followed_by.all %}
+                <div class="card">
+                    <div class="card-footer text-muted alert alert-success">
+                        <h3 class="card-title h4">
+                            {{ profile.first_name | title }} is followed by: {{ profiles.followed_by.count }}
+                        </h3>
+                    </div>
+                    <ul class="list-unstyled">
+                        {% for follower in profile.followed_by.all %}
+                        {% if follower != profile %}
+                        <a href="{% url 'registration:profile_list' follower.pk %}" style="text-decoration: none;">
+                        <li class="card-body mt-20">
+                            @{{ follower | lower }}
+                        </li>
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+<section class="signup">
+                <form method="POST" class="register-form" id="register-form">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                        <input type="submit" class="btn btn-primary btn-lg" value="Register">
+                </form>
+</section>
+{% endblock %}
