@@ -15,6 +15,8 @@ import os
 import environ
 import dj_database_url
 
+# from dotenv import load_dotenv
+# load_dotenv()
 
 env = environ.Env(
     # set casting, default value
@@ -22,6 +24,7 @@ env = environ.Env(
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -30,6 +33,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+
+# SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -101,6 +106,19 @@ DATABASES = {
         default=env('DATABASES')
     ),
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("db_name"),
+#         'USER': os.getenv("db_username"),
+#         'PASSWORD': os.getenv("db_password"),
+#         'HOST': os.getenv("db_host"),
+#         'PORT': os.getenv("db_port"),  # 5432 by default
+#     }
+# }
+
 
 
 # Password validation
