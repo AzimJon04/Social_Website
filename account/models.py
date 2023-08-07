@@ -29,6 +29,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created_at']),
+        ]
+        ordering = ['-created_at']
+        
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
